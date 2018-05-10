@@ -5,7 +5,7 @@ public class AopTest {
 
 	public static void main(String[] args) {
 		ApplicationContext ctx = new GenericXmlApplicationContext("aop.xml");
-		MessageBean bean = (MessageBean)ctx.getBean("messageBean");
+		MessageBean bean = (MessageBean)ctx.getBean("proxy");
 		bean.sayHello();
 	}
 

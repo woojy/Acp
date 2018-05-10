@@ -6,5 +6,28 @@
 	<bean id="messageBean" class="MessageBeanImpl">
 		<property name="name" value="홍길동"></property>
 	</bean>
+	
 	<bean id="logginAdvice" class="LogginAdvice"/>
+	
+	<!-- 어드바이저 객체를 하나 만든다 -->
+	<bean id="advisor" class="org.springframework.aop.support.DefaultPointcutAdvisor">
+		<property name="advice" ref="logginAdvice"></property>
+		<property name="pointcut">
+			<bean class="org.springframework.aop.support.JdkRegexpMethodPointcut">
+				<property name="pattern" value=".*sayHello.*"></property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 어드바이저까지 만듬 (아직 재료) -->
+	
+	<!-- 어드바이저와 target 클래스를 엮어줘야함 => 프록시-->
+	<bean id="proxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<!-- target클래스 정보를 제공해준다. -->
+		<property name="target" ref="messageBean"></property>
+		
+		<!-- 어드바이저 정보를 제공해준다. -->
+		<property name="interceptorNames">
+			<value>advisor</value>
+		</property>
+	</bean>
 </beans>
